@@ -1,0 +1,23 @@
+{
+  "filename": "city2",
+  "structures": [
+    {
+      "filename": "cube",
+      "position": {
+        "z": 626,
+        "y": 50,
+        "x": 661
+      },
+      "note": "demo  công trình mẫu"
+    },
+    {
+      "filename": "cube",
+      "position": {
+        "z": 628,
+        "y": 50,
+        "x": 642
+      },
+      "note": "Một công trình khác"
+    }
+  ]
+}
