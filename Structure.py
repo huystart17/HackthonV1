@@ -43,8 +43,8 @@ class Structure(MinecraftStuff.MinecraftShape):
         }
         f = open(os.path.join(data_root, "{}.json".format(filename)), 'w+', )
         json.dump(save_data, f, ensure_ascii=False)
-
         f.close()
+        self.filename = filename
         pass
 
     def save_full(self):
@@ -71,6 +71,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         f = open(os.path.join(data_root, "{}.json".format(filename)), 'w+', )
         json.dump(save_data, f, ensure_ascii=False)
         f.close()
+        self.filename = filename
         pass
 
     def load(self, filename=False):
