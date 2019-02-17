@@ -1,14 +1,1 @@
-{
-  "filename": "city",
-  "structures": [
-    {
-      "filename": "cube",
-      "position": {
-        "z": 626,
-        "y": 50,
-        "x": 661
-      },
-      "note": "demo  công trình mẫu"
-    }
-  ]
-}
+{"structures": [{"position": {"y": 50, "x": 641, "z": 622}, "filename": "thanghouse", "note": ""}, {"position": {"y": 50, "x": 649, "z": 634}, "filename": "thanghouse3KoNT", "note": "công trình còn thiếu nội thất"}], "filename": "city"}

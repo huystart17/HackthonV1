@@ -71,6 +71,16 @@ class City:
 
         pass
 
+    def show_struct(self):
+        try:
+            structures = self.structuresData
+            for i in range(len(structures)):
+                tempst = structures[i]
+                print("{}. {} || {}".format(i, tempst.get('filename', ''), tempst.get('note', '')))
+        except:
+            print('Có lỗi với dữ liệu thành phố')
+        pass
+
     def add_struct(self):
         print("bạn hãy nhập vị trí của bạn vào vị trí bạn muốn đặt công trình")
         x = input('x = ')
@@ -80,7 +90,7 @@ class City:
         instance = Structure.Structure(mc, vec3.Vec3(int(x), int(y), int(z)))
         self.current = instance
 
-        self.currentNote = input("Hãy nhập vào ghi chú của bạn về công trình này")
+        note = input("Hãy nhập vào ghi chú của bạn về công trình này")
         self.structuresInstance.append(instance)
         self.currentIndex = len(self.structuresInstance) - 1
         self.structuresData.append({
@@ -89,12 +99,15 @@ class City:
                 "y": instance.position.y,
                 "z": instance.position.z,
             },
-            "note": self.currentNote,
+            "note": note,
             "filename": instance.filename
         })
+        return instance
         pass
 
-    def save_struct(self):
+    def save_struct(self, cIndex=None):
+        if cIndex == None:
+            cIndex = int(input('Nhập vào số thứ tự công trình muốn lưu'))
         cIndex = self.currentIndex
         instance = self.structuresInstance[cIndex]
         self.structuresData[cIndex] = {
@@ -103,30 +116,36 @@ class City:
                 "y": instance.position.y,
                 "z": instance.position.z,
             },
-            "note": self.currentNote,
+            "note": self.structuresData[cIndex]['note'],
             "filename": instance.filename
         }
         pass
 
-    def remove_struct(self):
+    def remove_struct(self, cIndex=None):
+        if cIndex == None:
+            cIndex = int(input('Nhập vào số thứ tự công trình muốn xoá'))
+        self.structuresInstance[cIndex].clear()
+        del self.structuresInstance[cIndex]
+        del self.structuresData[cIndex]
         pass
 
-    def get_struct(self):
+    def get_struct(self, cIndex=None):
         try:
-            cIndex = int(input("Nhập vào index của công trình mà bạn muốn sử dụng"))
-            return self.structuresInstance[cIndex]
+            if cIndex == None:
+                cIndex = int(input('Nhập vào số thứ tự công trình muốn sử dụng'))
+                return self.structuresInstance[cIndex]
         except:
             print("Không tìm thấy công trình yêu cầu")
         pass
-
-    def run(self):
-        pass
+        return self.structuresInstance[cIndex]
 
     def save(self, name=""):
         if len(name) == 0:
             filename = input("Nhập tên file")
         else:
             filename = name
+        for i in range(len(self.structuresData)):
+            self.save_struct(i)
         save_data = {
             "filename": filename,
             "structures": self.structuresData
@@ -144,14 +163,24 @@ class City:
         with open(os.path.join(data_root, "{}.json".format(filename))) as f:
             data = json.load(f)
             self.filename = filename
+            self.structuresInstance = []
+            self.structuresData = []
             for st in data['structures']:
                 print(st)
                 try:
-                    temp = Structure.Structure(mc, vec3.Vec3(st['position']['x'],st['position']['y'],st['position']['z']))
+                    temp = Structure.Structure(mc,
+                                               vec3.Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
                     temp.load(st['filename'])
-                    # print(st['note'])
-                    # mc.postToChat(st['note'])
-                    # mc.postToChat("Vua hoan thien")
+                    self.structuresData.append(st)
+                    self.structuresInstance.append(temp)
+
+
                 except:
                     print("File dữ liệu bị lỗi")
         pass
+
+    def run(self):
+        pass
+
+
+ct = City()
