@@ -121,6 +121,20 @@ class City:
         }
         pass
 
+    def save_all(self):
+        for cIndex in range(len(self.structuresData)):
+            instance = self.structuresInstance[cIndex]
+            self.structuresData[cIndex] = {
+                "position": {
+                    "x": instance.position.x,
+                    "y": instance.position.y,
+                    "z": instance.position.z,
+                },
+                "note": self.structuresData[cIndex]['note'],
+                "filename": instance.filename
+            }
+        self.save()
+
     def remove_struct(self, cIndex=None):
         if cIndex == None:
             cIndex = int(input('Nhập vào số thứ tự công trình muốn xoá'))
@@ -181,6 +195,13 @@ class City:
 
     def run(self):
         pass
+
+    def teleport_all(self):
+        plids = mc.getPlayerEntityIds()
+        for id in plids:
+            mc.entity.setPos(id, self.startPoint['x'],
+                             self.startPoint['y'] + 2,
+                             self.startPoint['z'], )
 
 
 ct = City()
