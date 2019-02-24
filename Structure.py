@@ -58,9 +58,10 @@ class Structure(MinecraftStuff.MinecraftShape):
             vec = dataRow.originalPos
             vec_actual = dataRow.actualPos
             block = mine_connect.getBlockWithData(vec_actual.x, vec_actual.y, vec_actual.z)
-            data.append([vec.x, vec.y, vec.z, block.id, block.data])
-            count = count + 1
-            print("copy {}/{}".format(count, total))
+            if block.id != 0 :
+                data.append([vec.x, vec.y, vec.z, block.id, block.data])
+                count = count + 1
+                print("copy {}/{}".format(count, total))
         save_data = {
             "shapeBlocks": data,
             "position": {
@@ -76,7 +77,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         pass
 
     def load(self, filename=False):
-        if not (filename):
+        if not filename:
             filename = input("Nhập tên file bạn muốn load")
         # try:
         with open(os.path.join(data_root, "{}.json".format(filename))) as f:

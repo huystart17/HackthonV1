@@ -1,0 +1,17 @@
+{
+  "filename": "city_x",
+  "structures": [
+    {
+      "position": {
+        "x": 670,
+        "y": 50,
+        "z": 757
+      },
+      "note": "",
+      "filename": "coi_xoay_gio"
+    }
+  ],
+  "data": {
+    "energy": 100
+  }
+}

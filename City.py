@@ -31,7 +31,7 @@ class City:
             'y': 50,
             'z': 1000
         }
-        self.cityGroundBlock = 1
+        self.cityGroundBlock = 155
         self.cityHeight = 50
         self.cityGroundData = 1
         self.data = {
@@ -44,7 +44,7 @@ class City:
         # Đặt đất nền
         mc.setBlocks(
             self.startPoint['x'],
-            self.startPoint['y'] - 2,
+            self.startPoint['y'] - 3,
             self.startPoint['z'],
             self.endPoint['x'],
             self.endPoint['y'],
@@ -67,10 +67,10 @@ class City:
         )
         mc.postToChat("We have air")
 
-        for id in mc.getPlayerEntityIds():
-            mc.entity.setPos(id, self.startPoint['x'],
-                             self.startPoint['y'] + 1,
-                             self.startPoint['z'], )
+        # for id in mc.getPlayerEntityIds():
+        #     mc.entity.setPos(id, self.startPoint['x'],
+        #                      self.startPoint['y'] + 1,
+        #                      self.startPoint['z'], )
 
         pass
 
@@ -125,7 +125,7 @@ class City:
         }
         pass
 
-    def save_all(self,name):
+    def save_all(self, name):
         for cIndex in range(len(self.structuresData)):
             instance = self.structuresInstance[cIndex]
             self.structuresData[cIndex] = {
@@ -215,9 +215,15 @@ class City:
 ct = City()
 
 
+def hieu_minh_load():
+    st = ct.add_struct(735, 50, 764, 'Super market Hiếu Minh')
+    st.load('HM_SP_MARKET')
+    ct.save_all('HACKTHON_CITY')
+
+
 def wind_mill():
-    st = ct.add_struct(670,50,757)
-    st.setBlocks(-4, -4, 0, 4, 4, 0,1)
+    st = ct.add_struct(670, 50, 757)
+    st.setBlocks(-4, -4, 0, 4, 4, 0, 1)
     st.save('coi_xoay_gio')
     ct.save_all("city_x")
     for i in range(10):
@@ -225,6 +231,23 @@ def wind_mill():
         st.rotateBy(0, 0, 36)
         ct.increase_energy(10)
     ct.save_all('city_x')
-    print("data",ct.data)
+    print("data", ct.data)
+for j in range (5):
+    st = ct.add_struct(735, 50 + j * 6, 800, 'SKY HOTEL Hiếu Minh')
+    st.setBlocks(0,0,0,10,0,10,0)
+    st.setBlocks(1,5,1,9,5,9,24,4)
+    for i in range (10):
+        if(i % 2 == 0):
+            st.setBlocks(0 + i ,0, 0, 0 + i ,5, 0 ,1)
+            st.setBlocks(0  ,0, 0+i, 0 ,5, 0+ i ,1)
+            st.setBlocks(10 ,0, 0+i, 10 ,5, 0+ i ,1)
+            st.setBlocks(0 + i ,0, 10, 0 + i ,5, 10 ,1)
+        else:
+            st.setBlocks(0 + i ,0, 0, 0 + i ,5, 0 ,95,4)
+            st.setBlocks(0  ,0, 0+i, 0 ,5, 0+ i ,95,4)
+            st.setBlocks(10 ,0, 0+i, 10 ,5, 0+ i ,95,4)
+            st.setBlocks(0 + i ,0, 10, 0 + i ,5, 10 ,95,4)
+    st.setBlocks(1,0,1,9,0,9,24,4)
 
 
+        
