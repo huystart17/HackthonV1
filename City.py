@@ -81,11 +81,12 @@ class City:
             print('Có lỗi với dữ liệu thành phố')
         pass
 
-    def add_struct(self):
-        print("bạn hãy nhập vị trí của bạn vào vị trí bạn muốn đặt công trình")
-        x = input('x = ')
-        y = input('y = ')
-        z = input('z = ')
+    def add_struct(self, x=False, y=False, z=False):
+        if not (type(x) is int and type(y) is int and type(z) is int):
+            print("bạn hãy nhập vị trí của bạn vào vị trí bạn muốn đặt công trình")
+            x = input('x = ')
+            y = input('y = ')
+            z = input('z = ')
 
         instance = Structure.Structure(mc, vec3.Vec3(int(x), int(y), int(z)))
         self.current = instance
@@ -205,3 +206,12 @@ class City:
 
 
 ct = City()
+
+
+
+def make_house_line ():
+    for i in range(5):
+        st = ct.add_struct(615,50,637 + i * 20)
+        st.load('mh2_1')
+
+
