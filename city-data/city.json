@@ -1,23 +1,98 @@
 {
+  "filename": "city",
   "structures": [
     {
       "position": {
+        "x": 716,
         "y": 50,
-        "x": 641,
-        "z": 622
+        "z": 757
       },
-      "filename": "thanghouse",
-      "note": ""
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
     },
     {
       "position": {
+        "x": 716,
         "y": 50,
-        "x": 649,
-        "z": 634
+        "z": 778
       },
-      "filename": "thanghouse3KoNT",
-      "note": "công trình còn thiếu nội thất"
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 799
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 820
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 841
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 862
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 883
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 904
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD_2"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 925
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
+    },
+    {
+      "position": {
+        "x": 716,
+        "y": 50,
+        "z": 946
+      },
+      "note": "đoạn đường",
+      "filename": "DH_BIG_ROAD"
     }
   ],
-  "filename": "city"
+  "data": {
+    "energy": 0
+  }
 }

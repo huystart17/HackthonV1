@@ -184,12 +184,17 @@ class City:
             self.filename = filename
             self.structuresInstance = []
             self.structuresData = []
+            load_mode = input ("""
+            1. Chỉ load data
+            2. Load công trình và xây dựng
+            """)
             for st in data['structures']:
                 print(st)
                 try:
                     temp = Structure.Structure(mc,
                                                vec3.Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
-                    temp.load(st['filename'])
+                    if load_mode ==2 :
+                        temp.load(st['filename'])
                     self.structuresData.append(st)
                     self.structuresInstance.append(temp)
 
@@ -213,8 +218,7 @@ class City:
 
 
 ct = City()
-
-
+ct.load('city')
 def hieu_minh_load():
     st = ct.add_struct(735, 50, 764, 'Super market Hiếu Minh')
     st.load('HM_SP_MARKET')
@@ -232,22 +236,31 @@ def wind_mill():
         ct.increase_energy(10)
     ct.save_all('city_x')
     print("data", ct.data)
-for j in range (5):
-    st = ct.add_struct(735, 50 + j * 6, 800, 'SKY HOTEL Hiếu Minh')
-    st.setBlocks(0,0,0,10,0,10,0)
-    st.setBlocks(1,5,1,9,5,9,24,4)
-    for i in range (10):
-        if(i % 2 == 0):
-            st.setBlocks(0 + i ,0, 0, 0 + i ,5, 0 ,1)
-            st.setBlocks(0  ,0, 0+i, 0 ,5, 0+ i ,1)
-            st.setBlocks(10 ,0, 0+i, 10 ,5, 0+ i ,1)
-            st.setBlocks(0 + i ,0, 10, 0 + i ,5, 10 ,1)
-        else:
-            st.setBlocks(0 + i ,0, 0, 0 + i ,5, 0 ,95,4)
-            st.setBlocks(0  ,0, 0+i, 0 ,5, 0+ i ,95,4)
-            st.setBlocks(10 ,0, 0+i, 10 ,5, 0+ i ,95,4)
-            st.setBlocks(0 + i ,0, 10, 0 + i ,5, 10 ,95,4)
-    st.setBlocks(1,0,1,9,0,9,24,4)
 
 
-        
+def make_sky_hotel():
+    for j in range(5):
+        st = ct.add_struct(735, 50 + j * 6, 800, 'SKY HOTEL Hiếu Minh')
+        st.setBlocks(0, 0, 0, 10, 0, 10, 0)
+        st.setBlocks(1, 5, 1, 9, 5, 9, 24, 4)
+        for i in range(10):
+            if (i % 2 == 0):
+                st.setBlocks(0 + i, 0, 0, 0 + i, 5, 0, 1)
+                st.setBlocks(0, 0, 0 + i, 0, 5, 0 + i, 1)
+                st.setBlocks(10, 0, 0 + i, 10, 5, 0 + i, 1)
+                st.setBlocks(0 + i, 0, 10, 0 + i, 5, 10, 1)
+            else:
+                st.setBlocks(0 + i, 0, 0, 0 + i, 5, 0, 95, 4)
+                st.setBlocks(0, 0, 0 + i, 0, 5, 0 + i, 95, 4)
+                st.setBlocks(10, 0, 0 + i, 10, 5, 0 + i, 95, 4)
+                st.setBlocks(0 + i, 0, 10, 0 + i, 5, 10, 95, 4)
+        st.setBlocks(1, 0, 1, 9, 0, 9, 24, 4)
+
+
+def set_roads():
+    x, y, z = 716, 50, 757
+
+    for _z in range(10):
+        st = ct.add_struct(x, y, z + _z * 21, 'đoạn đường')
+        st.load("DH_BIG_ROAD")
+    ct.save_all('city')
