@@ -34,6 +34,9 @@ class City:
         self.cityGroundBlock = 1
         self.cityHeight = 50
         self.cityGroundData = 1
+        self.data = {
+            "energy": 0
+        }
 
         pass
 
@@ -81,7 +84,7 @@ class City:
             print('Có lỗi với dữ liệu thành phố')
         pass
 
-    def add_struct(self, x=False, y=False, z=False):
+    def add_struct(self, x=False, y=False, z=False, note=False):
         if not (type(x) is int and type(y) is int and type(z) is int):
             print("bạn hãy nhập vị trí của bạn vào vị trí bạn muốn đặt công trình")
             x = input('x = ')
@@ -90,8 +93,8 @@ class City:
 
         instance = Structure.Structure(mc, vec3.Vec3(int(x), int(y), int(z)))
         self.current = instance
-
-        note = input("Hãy nhập vào ghi chú của bạn về công trình này")
+        if not note:
+            note = input("Hãy nhập vào ghi chú của bạn về công trình này")
         self.structuresInstance.append(instance)
         self.currentIndex = len(self.structuresInstance) - 1
         self.structuresData.append({
@@ -122,7 +125,7 @@ class City:
         }
         pass
 
-    def save_all(self):
+    def save_all(self,name):
         for cIndex in range(len(self.structuresData)):
             instance = self.structuresInstance[cIndex]
             self.structuresData[cIndex] = {
@@ -134,7 +137,7 @@ class City:
                 "note": self.structuresData[cIndex]['note'],
                 "filename": instance.filename
             }
-        self.save()
+        self.save(name)
 
     def remove_struct(self, cIndex=None):
         if cIndex == None:
@@ -163,7 +166,8 @@ class City:
             self.save_struct(i)
         save_data = {
             "filename": filename,
-            "structures": self.structuresData
+            "structures": self.structuresData,
+            "data": self.data
         }
         f = open(os.path.join(data_root, "{}.json".format(filename)), 'w+', )
         json.dump(save_data, f, ensure_ascii=False)
@@ -204,14 +208,23 @@ class City:
                              self.startPoint['y'] + 2,
                              self.startPoint['z'], )
 
+    def increase_energy(self, amount=10):
+        self.data['energy'] = self.data['energy'] + amount
+
 
 ct = City()
 
 
-
-def make_house_line ():
-    for i in range(5):
-        st = ct.add_struct(615,50,637 + i * 20)
-        st.load('mh2_1')
+def wind_mill():
+    st = ct.add_struct(670,50,757)
+    st.setBlocks(-4, -4, 0, 4, 4, 0,1)
+    st.save('coi_xoay_gio')
+    ct.save_all("city_x")
+    for i in range(10):
+        time.sleep(1)
+        st.rotateBy(0, 0, 36)
+        ct.increase_energy(10)
+    ct.save_all('city_x')
+    print("data",ct.data)
 
 

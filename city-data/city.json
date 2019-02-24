@@ -1,1 +1,23 @@
-{"structures": [{"position": {"y": 50, "x": 641, "z": 622}, "filename": "thanghouse", "note": ""}, {"position": {"y": 50, "x": 649, "z": 634}, "filename": "thanghouse3KoNT", "note": "công trình còn thiếu nội thất"}], "filename": "city"}
+{
+  "structures": [
+    {
+      "position": {
+        "y": 50,
+        "x": 641,
+        "z": 622
+      },
+      "filename": "thanghouse",
+      "note": ""
+    },
+    {
+      "position": {
+        "y": 50,
+        "x": 649,
+        "z": 634
+      },
+      "filename": "thanghouse3KoNT",
+      "note": "công trình còn thiếu nội thất"
+    }
+  ],
+  "filename": "city"
+}

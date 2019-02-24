@@ -29,12 +29,13 @@ class Structure(MinecraftStuff.MinecraftShape):
         self.filename = ""
         pass
 
-    def save(self):
+    def save(self,filename=False):
         data = []
         for dataRow in self.shapeBlocks:
             vec = dataRow.originalPos
             data.append([vec.x, vec.y, vec.z, dataRow.blockType, dataRow.blockData])
-        filename = input("Nhập tên file")
+        if not filename:
+            filename = input("Nhập tên file")
 
         save_data = {
             "shapeBlocks": data,
