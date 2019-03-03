@@ -1,3 +1,5 @@
+import random
+
 from mc import mc
 import os
 import json
@@ -5,6 +7,7 @@ from mcpi import vec3
 from mcpi import block
 import time
 import Structure
+import turtle
 
 dirname = os.path.dirname(__file__)
 data_folder = "city-data"
@@ -31,6 +34,11 @@ class City:
             'y': 50,
             'z': 1000
         }
+        self.centerPoint = {
+            'x': 800,
+            'y': 50,
+            'z': 800
+        }
         self.cityGroundBlock = 155
         self.cityHeight = 50
         self.cityGroundData = 1
@@ -55,16 +63,16 @@ class City:
         mc.postToChat("We have ground")
 
         # clear không gian
-
-        mc.setBlocks(
-            self.startPoint['x'],
-            self.startPoint['y'],
-            self.startPoint['z'],
-            self.endPoint['x'],
-            self.endPoint['y'] + self.cityHeight,
-            self.endPoint['z'],
-            block.AIR
-        )
+        for i in range(self.cityHeight):
+            mc.setBlocks(
+                self.startPoint['x'],
+                self.startPoint['y'],
+                self.startPoint['z'],
+                self.endPoint['x'],
+                self.endPoint['y'] + self.cityHeight,
+                self.endPoint['z'],
+                block.AIR
+            )
         mc.postToChat("We have air")
 
         # for id in mc.getPlayerEntityIds():
@@ -84,7 +92,7 @@ class City:
             print('Có lỗi với dữ liệu thành phố')
         pass
 
-    def add_struct(self, x=False, y=False, z=False, note=False):
+    def add_struct(self, x=False, y=False, z=False, note=False, tags=[]):
         if not (type(x) is int and type(y) is int and type(z) is int):
             print("bạn hãy nhập vị trí của bạn vào vị trí bạn muốn đặt công trình")
             x = input('x = ')
@@ -104,7 +112,8 @@ class City:
                 "z": instance.position.z,
             },
             "note": note,
-            "filename": instance.filename
+            "filename": instance.filename,
+            "tags": tags,
         })
         return instance
         pass
@@ -163,7 +172,8 @@ class City:
         else:
             filename = name
         for i in range(len(self.structuresData)):
-            self.save_struct(i)
+            if i :
+                self.save_struct(i)
         save_data = {
             "filename": filename,
             "structures": self.structuresData,
@@ -175,7 +185,7 @@ class City:
         f.close()
         pass
 
-    def load(self, filename=False):
+    def load(self, filename=False, load_mode=False):
         if not (filename):
             filename = input("Nhập tên file bạn muốn load")
         # try:
@@ -184,16 +194,17 @@ class City:
             self.filename = filename
             self.structuresInstance = []
             self.structuresData = []
-            load_mode = input ("""
-            1. Chỉ load data
-            2. Load công trình và xây dựng
-            """)
+            if not load_mode:
+                load_mode = input("""
+                1. Chỉ load data
+                2. Load công trình và xây dựng
+                """)
             for st in data['structures']:
                 print(st)
                 try:
                     temp = Structure.Structure(mc,
                                                vec3.Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
-                    if load_mode ==2 :
+                    if load_mode == "2":
                         temp.load(st['filename'])
                     self.structuresData.append(st)
                     self.structuresInstance.append(temp)
@@ -216,9 +227,22 @@ class City:
     def increase_energy(self, amount=10):
         self.data['energy'] = self.data['energy'] + amount
 
+    def monitor(self):
+        sc = turtle.Screen()
+        pen = turtle.Turtle()
 
-ct = City()
-ct.load('city')
+        for st in self.structuresData:
+            pen.color(random.choice(['red', 'blue', 'green']))
+            x, z = st['position']['x'], st['position']['z']
+            pen.setpos(x, z)
+        pass
+
+
+
+def main():
+    pass
+
+
 def hieu_minh_load():
     st = ct.add_struct(735, 50, 764, 'Super market Hiếu Minh')
     st.load('HM_SP_MARKET')
@@ -239,21 +263,25 @@ def wind_mill():
 
 
 def make_sky_hotel():
+    st = ct.add_struct(735, 50, 800, 'SKY HOTEL Hiếu Minh')
+    y = 0
+    st.setBlocks(-5, y, -5, 15, y, 15, 184,0)
+    st.setBlocks(-4, y, -4, 14, y, 14, 0, 0)
     for j in range(5):
-        st = ct.add_struct(735, 50 + j * 6, 800, 'SKY HOTEL Hiếu Minh')
-        st.setBlocks(0, 0, 0, 10, 0, 10, 0)
-        st.setBlocks(1, 5, 1, 9, 5, 9, 24, 4)
+        y = j * 6
+        st.setBlocks(0, y, 0, 10, y, 10, 0)
+        st.setBlocks(1, y + 5, 1, 9, y + 5, 9, 24, 4)
         for i in range(10):
             if (i % 2 == 0):
-                st.setBlocks(0 + i, 0, 0, 0 + i, 5, 0, 1)
-                st.setBlocks(0, 0, 0 + i, 0, 5, 0 + i, 1)
-                st.setBlocks(10, 0, 0 + i, 10, 5, 0 + i, 1)
-                st.setBlocks(0 + i, 0, 10, 0 + i, 5, 10, 1)
+                st.setBlocks(0 + i, y, 0, 0 + i, y + 5, 0, 1)
+                st.setBlocks(0, y, 0 + i, 0, y + 5, 0 + i, 1)
+                st.setBlocks(10, y, 0 + i, 10, y + 5, 0 + i, 1)
+                st.setBlocks(0 + i, y, 10, 0 + i, y + 5, 10, 1)
             else:
-                st.setBlocks(0 + i, 0, 0, 0 + i, 5, 0, 95, 4)
-                st.setBlocks(0, 0, 0 + i, 0, 5, 0 + i, 95, 4)
-                st.setBlocks(10, 0, 0 + i, 10, 5, 0 + i, 95, 4)
-                st.setBlocks(0 + i, 0, 10, 0 + i, 5, 10, 95, 4)
+                st.setBlocks(0 + i, y, 0, 0 + i, y + 5, 0, 95, 4)
+                st.setBlocks(0, y, 0 + i, 0, y + 5, 0 + i, 95, 4)
+                st.setBlocks(10, y, 0 + i, 10, y + 5, 0 + i, 95, 4)
+                st.setBlocks(0 + i, y, 10, 0 + i, y + 5, 10, 95, 4)
         st.setBlocks(1, 0, 1, 9, 0, 9, 24, 4)
 
 

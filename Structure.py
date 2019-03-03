@@ -29,7 +29,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         self.filename = ""
         pass
 
-    def save(self,filename=False):
+    def save(self, filename=False):
         data = []
         for dataRow in self.shapeBlocks:
             vec = dataRow.originalPos
@@ -58,7 +58,7 @@ class Structure(MinecraftStuff.MinecraftShape):
             vec = dataRow.originalPos
             vec_actual = dataRow.actualPos
             block = mine_connect.getBlockWithData(vec_actual.x, vec_actual.y, vec_actual.z)
-            if block.id != 0 :
+            if block.id != 0:
                 data.append([vec.x, vec.y, vec.z, block.id, block.data])
                 count = count + 1
                 print("copy {}/{}".format(count, total))
@@ -83,6 +83,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         with open(os.path.join(data_root, "{}.json".format(filename))) as f:
             data = json.load(f)
             self.filename = filename
+            self.shapeBlocks = []
             if type(data) is dict and type(data['shapeBlocks']) is list:
                 self.shapeBlocks = []
                 # self.clear()
@@ -93,9 +94,13 @@ class Structure(MinecraftStuff.MinecraftShape):
                     z = block[2]
                     blockType = block[3]
                     blockData = block[4]
-                    self.setBlock(x, y, z, blockType, blockData)
+                    self.shapeBlocks.append(MinecraftStuff.ShapeBlock(x, y, z, blockType, blockData))
+                    # self.setBlock(x, y, z, blockType, blockData)
                     self.set_region(x, y, z, blockType, blockData)
                     self.save_glow_pos(x, y, z, blockType, blockData)
+                print("Đã load data thành công")
+                self.redraw()
+                self._move(self.position.x,self.position.y,self.position.z)
             else:
                 print("file data không hợp lệ")
                 # except:
@@ -186,4 +191,3 @@ class Structure(MinecraftStuff.MinecraftShape):
 
                 # KHi người dùng đứng gần căn nhà thì có lời chào
                 # Ngoài phần hàm run thì các bạn cần xây 1 một căn nhà đẹp
-

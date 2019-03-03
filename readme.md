@@ -10,3 +10,4 @@
 - **Thắng** : Bãi đỗ xe, và bể bơi, các 2 kiểu cửa hàng mini 
 - **Hưng** : Nhà cao ốc
 - 
+
