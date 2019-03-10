@@ -15,3 +15,4 @@ cityHeight = 50
 cityGroundBlock = 2
 cityGroundData = 1
 
+turtle_ratio = 2

@@ -5,7 +5,9 @@ import MinecraftStuff
 import os
 import json
 import time
-
+import turtle
+import turtle_tool
+from turtle import Screen
 dirname = os.path.dirname(__file__)
 data_folder = "structure-data"
 data_root = os.path.join(dirname, data_folder)
@@ -26,6 +28,7 @@ class Structure(MinecraftStuff.MinecraftShape):
             "lightStartTime": time.time(),
             "lightEndTime": False
         }
+        self.pen = turtle.Turtle()
         self.filename = ""
         pass
 
@@ -58,10 +61,9 @@ class Structure(MinecraftStuff.MinecraftShape):
             vec = dataRow.originalPos
             vec_actual = dataRow.actualPos
             block = mine_connect.getBlockWithData(vec_actual.x, vec_actual.y, vec_actual.z)
-            if block.id != 0:
-                data.append([vec.x, vec.y, vec.z, block.id, block.data])
-                count = count + 1
-                print("copy {}/{}".format(count, total))
+            data.append([vec.x, vec.y, vec.z, block.id, block.data])
+            count = count + 1
+            print("copy {}/{}".format(count, total))
         save_data = {
             "shapeBlocks": data,
             "position": {
@@ -100,15 +102,20 @@ class Structure(MinecraftStuff.MinecraftShape):
                     self.save_glow_pos(x, y, z, blockType, blockData)
                 print("Đã load data thành công")
                 self.redraw()
-                self._move(self.position.x,self.position.y,self.position.z)
+                self._move(self.position.x, self.position.y, self.position.z)
             else:
                 print("file data không hợp lệ")
                 # except:
                 #     print('Không tồn tại file này')
                 #     input('')
                 # pass
+            self.draw_region(filename)
+
+    def setIntroduce(self):
+        pass
 
     def introduce(self):
+        mc.postToChat("Hello. this is a city structure")
         pass
 
     def save_glow_pos(self, x, y, z, blockType, blockData):
@@ -160,6 +167,16 @@ class Structure(MinecraftStuff.MinecraftShape):
         if self.z_min > z:
             self.z_min = z
 
+    def draw_region(self,text= ""):
+        pen = self.pen
+        pen.speed(0)
+        x, y, z = self.position
+        turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,text)
+        pass
+    def is_in_turtle_region(self,x_turtle,y_turtle):
+        x, y, z = self.position
+        return turtle_tool.is_in_region(x_turtle,y_turtle, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min)
+
     def is_in_structure(self, playerid):
         pos = mc.entity.getTilePos(playerid)
         x_max, x_min = self.x_max + self.position.x, self.x_min + self.position.x
@@ -170,11 +187,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         else:
             return False
 
-    def is_near_house(self):
-        if self.position:
-            self.introduce()
-
-    def handle_answer(self):
+    def run_per_second(self, data):
         pass
 
     def run(self):

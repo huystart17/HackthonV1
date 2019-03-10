@@ -8,10 +8,12 @@ from mcpi import block
 import time
 import Structure
 import turtle
+import turtle_tool
 
 dirname = os.path.dirname(__file__)
 data_folder = "city-data"
 data_root = os.path.join(dirname, data_folder)
+screen = turtle.Screen()
 
 
 class City:
@@ -45,7 +47,23 @@ class City:
         self.data = {
             "energy": 0
         }
+        self.pen = turtle.Turtle()
 
+        self.turtlePlayers = [
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+            turtle.Turtle(),
+        ]
+
+        for tPlayer in self.turtlePlayers:
+            tPlayer.hideturtle()
+            tPlayer.penup()
         pass
 
     def clear(self):
@@ -172,7 +190,7 @@ class City:
         else:
             filename = name
         for i in range(len(self.structuresData)):
-            if i :
+            if i:
                 self.save_struct(i)
         save_data = {
             "filename": filename,
@@ -201,17 +219,17 @@ class City:
                 """)
             for st in data['structures']:
                 print(st)
-                try:
-                    temp = Structure.Structure(mc,
-                                               vec3.Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
-                    if load_mode == "2":
-                        temp.load(st['filename'])
-                    self.structuresData.append(st)
-                    self.structuresInstance.append(temp)
+                # try:
+                temp = Structure.Structure(mc,
+                                           vec3.Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
+                if load_mode == "2":
+                    temp.load(st['filename'])
+                self.structuresData.append(st)
+                self.structuresInstance.append(temp)
 
-
-                except:
-                    print("File dữ liệu bị lỗi")
+                #
+                # except:
+                #     print("File dữ liệu bị lỗi")
         pass
 
     def run(self):
@@ -228,19 +246,47 @@ class City:
         self.data['energy'] = self.data['energy'] + amount
 
     def monitor(self):
-        sc = turtle.Screen()
-        pen = turtle.Turtle()
+        for i in range(len(self.structuresInstance)):
+            st = self.structuresInstance[i]
+            st.pen.clear()
+            st.draw_region("({})".format(i))
+        pen = self.pen
+        pen.clear()
+        pen.setpos(-500, 400)
 
-        for st in self.structuresData:
-            pen.color(random.choice(['red', 'blue', 'green']))
-            x, z = st['position']['x'], st['position']['z']
-            pen.setpos(x, z)
+        def onclick_structure(x, y):
+            pen.clear()
+
+            for st in self.structuresInstance:
+                in_turtle = st.is_in_turtle_region(x, y)
+                if in_turtle:
+                    pen.write("Cong trinh :{}".format(st.filename))
+                    break
+
+            pass
+
+        def run_per_second():
+            ct.run_per_second()
+            screen.ontimer(run_per_second, 1000)
+
+        screen.ontimer(run_per_second, 1000)
+
+        screen.onclick(onclick_structure)
+        screen.mainloop()
         pass
 
+    def run_per_second(self):
+        turtlePlayers = self.turtlePlayers
+        players = mc.getPlayerEntityIds()
+        for i in range(len(players)):
+            tPlayer = turtlePlayers[i]
+            tPlayer.showturtle()
+            plid = players[i]
+            pos = mc.entity.getTilePos(plid)
+            turtle_tool.move_player(tPlayer, pos.x, pos.z,"{}".format(plid))
 
 
-def main():
-    pass
+ct = City()
 
 
 def hieu_minh_load():
@@ -265,7 +311,7 @@ def wind_mill():
 def make_sky_hotel():
     st = ct.add_struct(735, 50, 800, 'SKY HOTEL Hiếu Minh')
     y = 0
-    st.setBlocks(-5, y, -5, 15, y, 15, 184,0)
+    st.setBlocks(-5, y, -5, 15, y, 15, 184, 0)
     st.setBlocks(-4, y, -4, 14, y, 14, 0, 0)
     for j in range(5):
         y = j * 6
