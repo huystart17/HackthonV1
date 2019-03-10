@@ -354,24 +354,6 @@
     },
     {
       "position": {
-        "x": 817,
-        "y": 50,
-        "z": 607
-      },
-      "note": "11",
-      "filename": "H_HOTEL"
-    },
-    {
-      "position": {
-        "x": 817,
-        "y": 50,
-        "z": 607
-      },
-      "note": "11",
-      "filename": "H_HOTEL"
-    },
-    {
-      "position": {
         "x": 853,
         "y": 50,
         "z": 607
@@ -467,7 +449,7 @@
         "z": 859
       },
       "note": "hotel",
-      "filename": "H_HOTEL"
+      "filename": "skycrapper_west"
     },
     {
       "position": {

@@ -103,9 +103,12 @@ class City:
     def show_struct(self):
         try:
             structures = self.structuresData
+            structuresInstance  =self.structuresInstance
             for i in range(len(structures)):
                 tempst = structures[i]
                 print("{}. {} || {}".format(i, tempst.get('filename', ''), tempst.get('note', '')))
+                print("Pos", structuresInstance[i].position)
+
         except:
             print('Có lỗi với dữ liệu thành phố')
         pass
@@ -139,7 +142,6 @@ class City:
     def save_struct(self, cIndex=None):
         if cIndex == None:
             cIndex = int(input('Nhập vào số thứ tự công trình muốn lưu'))
-        cIndex = self.currentIndex
         instance = self.structuresInstance[cIndex]
         self.structuresData[cIndex] = {
             "position": {
@@ -190,8 +192,7 @@ class City:
         else:
             filename = name
         for i in range(len(self.structuresData)):
-            if i:
-                self.save_struct(i)
+            self.save_struct(i)
         save_data = {
             "filename": filename,
             "structures": self.structuresData,
@@ -272,7 +273,6 @@ class City:
         screen.ontimer(run_per_second, 1000)
 
         screen.onclick(onclick_structure)
-        screen.mainloop()
         pass
 
     def run_per_second(self):
