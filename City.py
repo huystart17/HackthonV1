@@ -273,6 +273,7 @@ class City:
         screen.ontimer(run_per_second, 1000)
 
         screen.onclick(onclick_structure)
+        screen.mainloop()
         pass
 
     def run_per_second(self):
