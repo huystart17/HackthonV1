@@ -8,11 +8,11 @@ import time
 import turtle
 import turtle_tool
 from turtle import Screen
+
 dirname = os.path.dirname(__file__)
 data_folder = "structure-data"
 data_root = os.path.join(dirname, data_folder)
 mc = mine_connect
-eneryPerSecond = 0.05
 
 
 class Structure(MinecraftStuff.MinecraftShape):
@@ -23,10 +23,19 @@ class Structure(MinecraftStuff.MinecraftShape):
             MinecraftStuff.MinecraftShape.__init__(self, mc, position, shapeBlocks=None, visible=True)
         self.mc = mc
         self.structData = {
-            "eneryMoney": 0,
-            "eneryDuration": 0,
-            "lightStartTime": time.time(),
-            "lightEndTime": False
+            "Energy consume : ": 0,
+            "Storage volume of Energy": 10,
+            "Produce * enery/second": 10,
+            "Number of Light": 0,
+            "====Info====": "",
+            "Type": "house",  # Có mấy loại structure như sau  house |vehicle |
+            "Description": "Đây là một số loại công trình",
+
+            "====State====": "",
+            # "Number of light turn on": "",
+            "People in house": "",
+            "Light is on": False,
+
         }
         self.pen = turtle.Turtle()
         self.filename = ""
@@ -114,6 +123,9 @@ class Structure(MinecraftStuff.MinecraftShape):
     def setIntroduce(self):
         pass
 
+    def set_name(self, text=""):
+        self.name = text
+
     def introduce(self):
         mc.postToChat("Hello. this is a city structure")
         pass
@@ -125,15 +137,21 @@ class Structure(MinecraftStuff.MinecraftShape):
             self.glow_pos = []
         if blockType == 89:
             self.glow_pos.append([x, y, z])
+        self.structData['Number of Light'] = len(self.glow_pos)
+        self.structData['Light is on'] = False
         pass
 
     def turn_off_glow(self):
+        self.pen.color('black')
+        self.pen.clear()
+        self.draw_region(self.name, )
         try:
             print(self.glow_pos)
         except:
             self.glow_pos = []
         for pos in self.glow_pos:
             self.setBlock(pos[0], pos[1], pos[2], 1)
+        self.structData['Light is on'] = False
 
     def turn_on_glow(self):
         try:
@@ -143,7 +161,9 @@ class Structure(MinecraftStuff.MinecraftShape):
         for pos in self.glow_pos:
             self.setBlock(pos[0], pos[1], pos[2], 89)
         self.pen.color('yellow')
-        self.draw_region()
+        self.draw_region(self.name, fill=True)
+        self.structData['Light is on'] = True
+
     def set_region(self, x, y, z, blockType, blockData):
         try:
             if self.x_max and self.y_max and self.z_max and self.x_min and self.y_min and self.z_min:
@@ -168,17 +188,34 @@ class Structure(MinecraftStuff.MinecraftShape):
         if self.z_min > z:
             self.z_min = z
 
-    def draw_region(self,text= ""):
+    def draw_region(self, text="", fill=False, fill_color='yellow'):
         pen = self.pen
+        if len(text) == 0:
+            text = self.name
         pen.speed(0)
         x, y, z = self.position
-        turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,text)
+        if fill:
+            turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
+                                                   text, fill_color)
+        else:
+            turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min, text)
         pass
-    def is_in_turtle_region(self,x_turtle,y_turtle):
+
+    def is_in_turtle_region(self, x_turtle, y_turtle):
         x, y, z = self.position
-        return turtle_tool.is_in_region(x_turtle,y_turtle, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min)
+        return turtle_tool.is_in_region(x_turtle, y_turtle, x + self.x_max, z + self.z_max, x + self.x_min,
+                                        z + self.z_min)
 
     def is_in_structure(self, playerid):
+        pos = mc.entity.getTilePos(playerid)
+        x_max, x_min = self.x_max + self.position.x, self.x_min + self.position.x
+        z_max, z_min = self.z_max + self.position.z, self.z_min + self.position.z
+        if x_min <= pos.x <= x_max and z_min <= pos.z <= z_max:
+            return True
+        else:
+            return False
+
+    def is_near_structure(self, playerid):
         pos = mc.entity.getTilePos(playerid)
         x_max, x_min = self.x_max + self.position.x, self.x_min + self.position.x
         z_max, z_min = self.z_max + self.position.z, self.z_min + self.position.z
@@ -188,13 +225,23 @@ class Structure(MinecraftStuff.MinecraftShape):
         else:
             return False
 
-    def run_per_second(self, data):
+    def check_pos_near_structure(self, x, y, z):
+        x_max, x_min = self.x_max + self.position.x + 5, self.x_min + self.position.x - 5
+        z_max, z_min = self.z_max + self.position.z + 5, self.z_min + self.position.z - 5
+        if x_min <= x <= x_max and z_min <= z <= z_max:
+            return True
+        else:
+            return False
+
+    # Các hàm liên quan đến điện năng thành phố
+    def produce_energy(self):
+        self.structData["Storage volume of Energy"] = self.structData["Storage volume of Energy"] + self.structData[
+            'Produce * enery/second']
         pass
 
-    def run(self):
+    def auto_light_on(self, plids=[]):
         pass
         # Làm tính năng thông minh
-        plids = mc.getPlayerEntityIds()
         # Tính năng liên quan đến hệ thống chiếu sáng
         for plid in plids:
             if self.is_in_structure(plid):
@@ -205,3 +252,16 @@ class Structure(MinecraftStuff.MinecraftShape):
 
                 # KHi người dùng đứng gần căn nhà thì có lời chào
                 # Ngoài phần hàm run thì các bạn cần xây 1 một căn nhà đẹp
+
+    def run_per_second(self, data):
+        if isinstance(data, dict):
+            plids = data.get('plids', [])
+            pl_positions = data.get('pl_positions', {})
+            if isinstance(data['pl_positions'], dict):
+                for plid in pl_positions:
+                    plpos = pl_positions[plid]
+                    if self.check_pos_near_structure(plpos[0], plpos[1], plpos[2]):
+                        self.auto_light_on(plids=plids)
+                        pass
+        self.produce_energy()
+        pass

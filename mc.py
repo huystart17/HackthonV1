@@ -1,9 +1,11 @@
 from mcpi import minecraft
 mc = False
-server = "localhost"
+server_online = "103.237.147.88"
+server_local = "localhost"
+
 while True:
     try:
-        mc = minecraft.Minecraft.create()
+        mc = minecraft.Minecraft.create(server_online)
         break
     except:
         mc = False

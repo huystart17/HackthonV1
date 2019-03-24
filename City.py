@@ -84,13 +84,15 @@ class City:
         for i in range(self.cityHeight):
             mc.setBlocks(
                 self.startPoint['x'],
-                self.startPoint['y'],
+                self.startPoint['y']+i,
                 self.startPoint['z'],
                 self.endPoint['x'],
-                self.endPoint['y'] + self.cityHeight,
+                self.endPoint['y'] + i,
                 self.endPoint['z'],
                 block.AIR
             )
+            time.sleep(3)
+            mc.postToChat("air {} ".format(i))
         mc.postToChat("We have air")
 
         # for id in mc.getPlayerEntityIds():
@@ -103,7 +105,7 @@ class City:
     def show_struct(self):
         try:
             structures = self.structuresData
-            structuresInstance  =self.structuresInstance
+            structuresInstance = self.structuresInstance
             for i in range(len(structures)):
                 tempst = structures[i]
                 print("{}. {} || {}".format(i, tempst.get('filename', ''), tempst.get('note', '')))
@@ -246,10 +248,11 @@ class City:
     def increase_energy(self, amount=10):
         self.data['energy'] = self.data['energy'] + amount
 
-    def monitor(self):
+    def monitor(self, mainloop=True):
         for i in range(len(self.structuresInstance)):
             st = self.structuresInstance[i]
             st.pen.clear()
+            st.set_name("({})".format(i))
             st.draw_region("({})".format(i))
         pen = self.pen
         pen.clear()
@@ -257,34 +260,51 @@ class City:
 
         def onclick_structure(x, y):
             pen.clear()
-
+            pen.up()
             for st in self.structuresInstance:
                 in_turtle = st.is_in_turtle_region(x, y)
                 if in_turtle:
                     pen.write("Cong trinh :{}".format(st.filename))
+                    y = pen.ycor()
+                    for key in st.structData:
+                        pen.sety(pen.ycor() - 30)
+                        pen.write("{}:{}".format(key, st.structData[key]))
+                    pen.sety(y)
                     break
-
+            pen.pendown()
             pass
 
         def run_per_second():
+            data = {}
             ct.run_per_second()
+            # for st in self.structuresInstance:
+            #     st.run_per_second(data)
             screen.ontimer(run_per_second, 1000)
 
         screen.ontimer(run_per_second, 1000)
 
         screen.onclick(onclick_structure)
-        screen.mainloop()
+        if mainloop:
+            screen.mainloop()
         pass
 
     def run_per_second(self):
         turtlePlayers = self.turtlePlayers
+        data = {}
         players = mc.getPlayerEntityIds()
+
+        data['plids'] = players
+        data['pl_positions']={}
         for i in range(len(players)):
             tPlayer = turtlePlayers[i]
             tPlayer.showturtle()
             plid = players[i]
             pos = mc.entity.getTilePos(plid)
-            turtle_tool.move_player(tPlayer, pos.x, pos.z,"{}".format(plid))
+            data['pl_positions']['plid'] = [pos.x,pos.y,pos.z]
+            turtle_tool.move_player(tPlayer, pos.x, pos.z, "{}".format(plid))
+
+        for st in self.structuresInstance:
+            st.run_per_second (data)
 
 
 ct = City()
