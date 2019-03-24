@@ -161,7 +161,8 @@ class Structure(MinecraftStuff.MinecraftShape):
             self.glow_pos = []
         for pos in self.glow_pos:
             self.setBlock(pos[0], pos[1], pos[2], 89)
-        self.pen.color('yellow')
+
+        # self.pen.color('yellow')
         self.draw_region(self.name, fill=True)
         self.structData['Light is on'] = True
 
