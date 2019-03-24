@@ -41,7 +41,7 @@ class City:
             'y': 50,
             'z': 800
         }
-        self.cityGroundBlock = 155
+        self.cityGroundBlock = 2
         self.cityHeight = 50
         self.cityGroundData = 1
         self.data = {
@@ -81,19 +81,19 @@ class City:
         mc.postToChat("We have ground")
 
         # clear không gian
-        for i in range(self.cityHeight):
-            mc.setBlocks(
-                self.startPoint['x'],
-                self.startPoint['y']+i,
-                self.startPoint['z'],
-                self.endPoint['x'],
-                self.endPoint['y'] + i,
-                self.endPoint['z'],
-                block.AIR
-            )
-            time.sleep(3)
-            mc.postToChat("air {} ".format(i))
-        mc.postToChat("We have air")
+        # for i in range(self.cityHeight):
+        #     mc.setBlocks(
+        #         self.startPoint['x'],
+        #         self.startPoint['y']+i,
+        #         self.startPoint['z'],
+        #         self.endPoint['x'],
+        #         self.endPoint['y'] + i,
+        #         self.endPoint['z'],
+        #         block.AIR
+        #     )
+        #     time.sleep(3)
+        #     mc.postToChat("air {} ".format(i))
+        # mc.postToChat("We have air")
 
         # for id in mc.getPlayerEntityIds():
         #     mc.entity.setPos(id, self.startPoint['x'],

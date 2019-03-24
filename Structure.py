@@ -38,6 +38,7 @@ class Structure(MinecraftStuff.MinecraftShape):
 
         }
         self.pen = turtle.Turtle()
+        self.name = "...."
         self.filename = ""
         pass
 
@@ -194,12 +195,16 @@ class Structure(MinecraftStuff.MinecraftShape):
             text = self.name
         pen.speed(0)
         x, y, z = self.position
-        if fill:
-            turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
-                                                   text, fill_color)
-        else:
-            turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min, text)
-        pass
+        try :
+            if fill:
+                turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
+                                                       text, fill_color)
+            else:
+                turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min, text)
+
+        except:
+            print("ok")
+
 
     def is_in_turtle_region(self, x_turtle, y_turtle):
         x, y, z = self.position
