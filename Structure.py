@@ -29,7 +29,7 @@ class Structure(MinecraftStuff.MinecraftShape):
             "Number of Light": 0,
             "====Info====": "",
             "Type": "house",  # Có mấy loại structure như sau  house |vehicle |
-            "Description": "Đây là một số loại công trình",
+            "Description": "ook",
 
             "====State====": "",
             # "Number of light turn on": "",
@@ -78,6 +78,53 @@ class Structure(MinecraftStuff.MinecraftShape):
             "shapeBlocks": data,
             "position": {
                 "x": self.position.x, "y": self.position.y, "z": self.position.z
+            },
+            "structData": self.structData
+        }
+
+        f = open(os.path.join(data_root, "{}.json".format(filename)), 'w+', )
+        json.dump(save_data, f, ensure_ascii=False)
+        f.close()
+        self.filename = filename
+        pass
+
+    def save_from_pos(self, x1, y1, z1, x2, y2, z2):
+        if x1 > x2:
+            x_max = int (x1)
+            x_min = int (x2)
+        else:
+            x_max = int (x2)
+            x_min = int (x1)
+        if y1 > y2:
+            y_max = int (y1)
+            y_min = int (y2)
+        else:
+            y_max = int (y2)
+            y_min = int (y1)
+        if z1 > z2:
+            z_max = int (z1)
+            z_min = int (z2)
+        else:
+            z_max = int (z2)
+            z_min = int (z1)
+
+        data = []
+        filename = input("Nhập tên file")
+        total = (x_max - x_min) *(z_max - z_min) *(y_max - y_min)
+        count = 0
+
+        for x in range(x_min, x_max +1):
+            for y in range(y_min, y_max + 1):
+                for z in range(z_min, z_max + 1):
+                    block = mine_connect.getBlockWithData(x, y, z)
+                    data.append([x -x_min, y-y_min, z - z_min, block.id, block.data])
+                    count = count + 1
+                    print("copy {}/{}".format(count, total))
+
+        save_data = {
+            "shapeBlocks": data,
+            "position": {
+                "x": x_min, "y": y_min, "z": z_min
             },
             "structData": self.structData
         }
@@ -196,16 +243,17 @@ class Structure(MinecraftStuff.MinecraftShape):
             text = self.name
         pen.speed(0)
         x, y, z = self.position
-        try :
+        try:
             if fill:
-                turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
+                turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min,
+                                                       z + self.z_min,
                                                        text, fill_color)
             else:
-                turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min, text)
+                turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
+                                                  text)
 
         except:
             print("ok")
-
 
     def is_in_turtle_region(self, x_turtle, y_turtle):
         x, y, z = self.position

@@ -1,0 +1,17 @@
+{
+  "filename": "p_road_1",
+  "structures": [
+    {
+      "position": {
+        "x": 638,
+        "y": 49,
+        "z": 670
+      },
+      "note": "doan duong nho",
+      "filename": "p_road_1"
+    }
+  ],
+  "data": {
+    "energy": 0
+  }
+}
