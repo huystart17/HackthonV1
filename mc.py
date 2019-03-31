@@ -8,7 +8,7 @@ port_luyen_thi = 4713
 
 while True:
     try:
-        mc = minecraft.Minecraft.create(server_local)
+        mc = minecraft.Minecraft.create(server_online, port_luyen_thi)
         break
     except:
         mc = False

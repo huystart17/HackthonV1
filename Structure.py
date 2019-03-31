@@ -110,7 +110,7 @@ class Structure(MinecraftStuff.MinecraftShape):
 
         data = []
         filename = input("Nhập tên file")
-        total = (x_max - x_min) *(z_max - z_min) *(y_max - y_min)
+        total = (x_max - x_min + 1) *(z_max - z_min + 1) *(y_max - y_min +1)
         count = 0
 
         for x in range(x_min, x_max +1):
@@ -134,7 +134,29 @@ class Structure(MinecraftStuff.MinecraftShape):
         f.close()
         self.filename = filename
         pass
+        pass
+    def compress_and_save(self,filename):
+        data = []
+        for dataRow in self.shapeBlocks:
+            vec = dataRow.originalPos
+            if  dataRow.blockType ==  0:
+                continue
+            data.append([vec.x, vec.y, vec.z, dataRow.blockType, dataRow.blockData])
+        if not filename:
+            filename = input("Nhập tên file")
 
+        save_data = {
+            "shapeBlocks": data,
+            "structData": self.structData,
+            "filename": filename
+        }
+        f = open(os.path.join(data_root, "{}.json".format(filename)), 'w+', )
+        json.dump(save_data, f, ensure_ascii=False)
+        f.close()
+        self.filename = filename
+        pass
+
+        pass
     def load(self, filename=False):
         if not filename:
             filename = input("Nhập tên file bạn muốn load")
