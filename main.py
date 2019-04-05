@@ -1,5 +1,7 @@
 from City import *
 from threading import Thread
-import _main
-ct.load('hackv13')
-
+# ct.clear()
+# ct.clear()
+ct.load('treefly', '2')
+ct.teleport_all()
+ct.monitor()

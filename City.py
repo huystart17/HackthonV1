@@ -91,7 +91,7 @@ class City:
                 self.endPoint['z'],
                 block.AIR
             )
-            time.sleep(3)
+            time.sleep(2)
             mc.postToChat("air {} ".format(i))
         mc.postToChat("We have air")
 
@@ -270,6 +270,14 @@ class City:
                         pen.sety(pen.ycor() - 30)
                         pen.write("{}:{}".format(key, st.structData[key]))
                     pen.sety(y)
+                    function_name = screen.textinput("Command", """
+1.Fly
+2.Park
+3.Fuel
+0.Nothing
+                    """)
+                    if function_name :
+                        st.action_persec(function_name)
                     break
             pen.pendown()
             pass

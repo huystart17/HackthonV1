@@ -39,6 +39,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         }
         self.pen = turtle.Turtle()
         self.name = "...."
+        self.current_function = ""
         self.filename = ""
         pass
 
@@ -88,38 +89,45 @@ class Structure(MinecraftStuff.MinecraftShape):
         self.filename = filename
         pass
 
-    def save_from_pos(self, x1, y1, z1, x2, y2, z2):
-        if x1 > x2:
-            x_max = int (x1)
-            x_min = int (x2)
-        else:
-            x_max = int (x2)
-            x_min = int (x1)
-        if y1 > y2:
-            y_max = int (y1)
-            y_min = int (y2)
-        else:
-            y_max = int (y2)
-            y_min = int (y1)
-        if z1 > z2:
-            z_max = int (z1)
-            z_min = int (z2)
-        else:
-            z_max = int (z2)
-            z_min = int (z1)
-
+    def save_from_pos(self, x1, y1, z1, x2, y2, z2, filename=False):
+        x_max = max(x1, x2)
+        y_max = max(y1, y2)
+        z_max = max(z1, z2)
+        x_min = min(x1, x2)
+        y_min = min(y1, y2)
+        z_min = min(z1, z2)
         data = []
-        filename = input("Nhập tên file")
-        total = (x_max - x_min + 1) *(z_max - z_min + 1) *(y_max - y_min +1)
+        if not (filename):
+            filename = input("Nhập tên file")
+        total = (x_max - x_min + 1) * (z_max - z_min + 1) * (y_max - y_min + 1)
+        tempBlocks = list(mine_connect.getBlocks(x_min, y_min, z_min, x_max, y_max, z_max))
+        range_y = y_max - y_min
+        range_x = x_max - x_min
+        range_z = z_max - z_min
+        saveBlock = []
+        for _y in range(range_y + 1):
+            for _x in range(range_x + 1):
+                for _z in range(range_z + 1):
+                    index = _x * (range_z + 1) + _z + _y * ((range_x + 1) * (range_z + 1))
+                    blData = tempBlocks[index]
+                    if blData != 0:
+                        saveBlock.append([_x, _y, _z, blData])
         count = 0
+        total = len(saveBlock)
+        for bl in saveBlock:
+            block = mine_connect.getBlockWithData(x_min + bl[0], y_min + bl[1], z_min + bl[2])
+            print(bl[0], bl[1], bl[2])
+            data.append([bl[0], bl[1], bl[2], block.id, block.data])
+            count = count + 1
+            print("copy {}/{}".format(count, total))
 
-        for x in range(x_min, x_max +1):
-            for y in range(y_min, y_max + 1):
-                for z in range(z_min, z_max + 1):
-                    block = mine_connect.getBlockWithData(x, y, z)
-                    data.append([x -x_min, y-y_min, z - z_min, block.id, block.data])
-                    count = count + 1
-                    print("copy {}/{}".format(count, total))
+        # for x in range(x_min, x_max +1):
+        #     for y in range(y_min, y_max + 1):
+        #         for z in range(z_min, z_max + 1):
+        #             block = mine_connect.getBlockWithData(x, y, z)
+        #             data.append([x -x_min, y-y_min, z - z_min, block.id, block.data])
+        #             count = count + 1
+        #             print("copy {}/{}".format(count, total))
 
         save_data = {
             "shapeBlocks": data,
@@ -134,12 +142,12 @@ class Structure(MinecraftStuff.MinecraftShape):
         f.close()
         self.filename = filename
         pass
-        pass
-    def compress_and_save(self,filename):
+
+    def compress_and_save(self, filename):
         data = []
         for dataRow in self.shapeBlocks:
             vec = dataRow.originalPos
-            if  dataRow.blockType ==  0:
+            if dataRow.blockType == 0:
                 continue
             data.append([vec.x, vec.y, vec.z, dataRow.blockType, dataRow.blockData])
         if not filename:
@@ -157,6 +165,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         pass
 
         pass
+
     def load(self, filename=False):
         if not filename:
             filename = input("Nhập tên file bạn muốn load")
@@ -340,4 +349,19 @@ class Structure(MinecraftStuff.MinecraftShape):
                         self.auto_light_on(plids=plids)
                         pass
         self.produce_energy()
+        if self.current_function == "1":
+            #fly :
+            self.moveBy(0,0,-10)
+            self.pen.clear()
+            self.draw_region()
+            pass
+        if self.current_function == "2":
+            pass
+        if self.current_function == "3":
+            pass
+
+        pass
+
+    def action_persec(self, function_name):
+        self.current_function = function_name
         pass
