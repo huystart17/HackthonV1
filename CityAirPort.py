@@ -270,7 +270,18 @@ class City:
                         pen.sety(pen.ycor() - 30)
                         pen.write("{}:{}".format(key, st.structData[key]))
                     pen.sety(y)
-
+                    function_name = screen.textinput("Command", """
+1.Go to start point
+2.Fuel
+3.Fly
+4.Go to park 1
+5.Go to park 2
+6.Go to park 3
+7.Auto fly
+                    """)
+                    if function_name :
+                        st.action_persec(function_name)
+                    break
             pen.pendown()
             pass
 

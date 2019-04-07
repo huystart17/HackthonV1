@@ -41,6 +41,8 @@ class Structure(MinecraftStuff.MinecraftShape):
         self.name = "...."
         self.current_function = ""
         self.filename = ""
+        self.auto = False
+        self.auto_done = {}
         pass
 
     def save(self, filename=False):
@@ -268,7 +270,7 @@ class Structure(MinecraftStuff.MinecraftShape):
         if self.z_min > z:
             self.z_min = z
 
-    def draw_region(self, text="", fill=False, fill_color='yellow'):
+    def draw_region(self, text="", fill=True, fill_color='yellow'):
         pen = self.pen
         if len(text) == 0:
             text = self.name
@@ -324,6 +326,7 @@ class Structure(MinecraftStuff.MinecraftShape):
             'Produce * enery/second']
         pass
 
+
     def auto_light_on(self, plids=[]):
         pass
         # Làm tính năng thông minh
@@ -348,19 +351,71 @@ class Structure(MinecraftStuff.MinecraftShape):
                     if self.check_pos_near_structure(plpos[0], plpos[1], plpos[2]):
                         self.auto_light_on(plids=plids)
                         pass
-        self.produce_energy()
+
         if self.current_function == "1":
             #fly :
-            self.moveBy(0,0,-10)
+            self.move(796,51,660)
+            self.rotateBy(-90,0,0)
             self.pen.clear()
-            self.draw_region()
+            self.draw_region('Start...',True)
+            self.current_function = '0'
             pass
         if self.current_function == "2":
+            self.structData["Storage volume of Energy"] = 60000
             pass
         if self.current_function == "3":
+            self.moveBy(0, 0, 20)
+            self.pen.clear()
+            self.structData["Storage volume of Energy"] -=60
+            if self.position.z > 950:
+                self.draw_region('Flying...', True)
+                if self.position.z > 1200:
+                    self.pen.clear()
+                    self.clear()
+                    self.current_function = '0'
+            else:
+                self.draw_region('Moving...', True)
+        if self.current_function == "4":
+            self.move(870,51,660)
+            self.pen.clear()
+            self.draw_region('Parking...', True)
+            self.current_function = '0'
+            pass
+        if self.current_function == "5":
+            self.move(870, 51, 770)
+            self.pen.clear()
+            self.draw_region('Parking...', True)
+            self.current_function = '0'
+            pass
+        if self.current_function == "6":
+            self.move(870, 51, 880)
+            self.pen.clear()
+            self.draw_region('Parking...', True)
+            self.current_function = '0'
+            pass
+        if self.current_function == "7":
+            self.auto = True
+            pass
+        if self.current_function == "x":
+            self.pen.clear()
+            self.clear()
             pass
 
-        pass
+            pass
+        if self.auto == True:
+            if not (self.auto_done.get('1', False)):
+                self.current_function = '1'
+                self.auto_done['1'] = True
+                return True
+            if self.auto_done.get('1', False) and not (self.auto_done.get('2', False)):
+                self.current_function = '2'
+                self.auto_done['2'] = True
+                return True
+            if self.auto_done.get('1', False) and self.auto_done.get('2', False) and not (
+            self.auto_done.get('3', False)):
+                self.current_function = '3'
+                self.auto_done['3'] = True
+                return True
 
     def action_persec(self, function_name):
         self.current_function = function_name
