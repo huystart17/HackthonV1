@@ -191,4 +191,4 @@ class Structure(MinecraftShape):
 
 st = Structure(Vec3(-1862,140,117))
 # st.save_custom_pos('QH_FACTORY', 54,66,131,148,100,22)
-st.save_custom_pos('QH_VILLA', -1862,66,117,-1823,85,156)
+#st.save_custom_pos('QH_VILLA', -1862,66,117,-1823,85,156)
