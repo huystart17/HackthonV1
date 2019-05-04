@@ -1,0 +1,442 @@
+{
+  "filename": "HACKCITY",
+  "structures": [
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 317
+      },
+      "data": {},
+      "note": "hotel",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 356
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 395
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 434
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 473
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    }
+  ],
+  "data": {},
+  "StreetData": [
+    {
+      "func": "street_line_x",
+      "position": [
+        -700,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -600,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -500,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -400,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -300,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -200,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        -100,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        0,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        100,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        200,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        300,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        400,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        500,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        600,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        700,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        800,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        900,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        1000,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        1100,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_x",
+      "position": [
+        1200,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -700
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -600
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -500
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -400
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -200
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        -100
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        0
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        100
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        200
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        300
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        400
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        500
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        600
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        700
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        800
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        900
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        1000
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        1100
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_line_z",
+      "position": [
+        300,
+        3,
+        1200
+      ],
+      "length": 100
+    },
+    {
+      "func": "street_intersect",
+      "position": [
+        300,
+        4,
+        300
+      ]
+    },
+    {
+      "func": "street_intersect",
+      "position": [
+        300,
+        2,
+        300
+      ]
+    },
+    {
+      "func": "street_intersect",
+      "position": [
+        300,
+        3,
+        300
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "filename": "QH_2",
+  "structures": [
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 317
+      },
+      "data": {},
+      "note": "hotel",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 356
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 395
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 434
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 317,
+        "y": 1,
+        "z": 473
+      },
+      "data": {},
+      "note": "Biet thu",
+      "filename": "QH_VILLA"
+    },
+    {
+      "position": {
+        "x": 260,
+        "y": 1,
+        "z": 317
+      },
+      "data": {},
+      "note": "ok",
+      "filename": "QH_VILLA_FACE_X_NEG"
+    },
+    {
+      "position": {
+        "x": 260,
+        "y": 1,
+        "z": 356
+      },
+      "data": {},
+      "note": "villa",
+      "filename": "QH_VILLA_FACE_X_NEG"
+    },
+    {
+      "position": {
+        "x": 260,
+        "y": 1,
+        "z": 395
+      },
+      "data": {},
+      "note": "villa",
+      "filename": "QH_VILLA_FACE_X_NEG"
+    },
+    {
+      "position": {
+        "x": 260,
+        "y": 1,
+        "z": 434
+      },
+      "data": {},
+      "note": "villa",
+      "filename": "QH_VILLA_FACE_X_NEG"
+    },
+    {
+      "position": {
+        "x": 260,
+        "y": 1,
+        "z": 473
+      },
+      "data": {},
+      "note": "villa",
+      "filename": "QH_VILLA_FACE_X_NEG"
+    }
+  ],
+  "data": {},
+  "StreetData": []
+}

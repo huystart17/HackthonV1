@@ -9,11 +9,14 @@ from PredefinedStructure import *
 dirname = os.path.dirname(__file__)
 data_root = os.path.join(dirname, CITY_FOLDER)
 
+startPoint = Vec3(300,3,300)
+
 
 class City():
     def __init__(self):
         self.structuresInstance = []
         self.structuresData = []
+        self.StreetData = []
         self.data = {}
         pass
 
@@ -39,6 +42,7 @@ class City():
                 "y": instance.position.y,
                 "z": instance.position.z,
             },
+            "data" : instance.data,
             "note": note,
             "filename": instance.filename,
             "tags": tags,
@@ -112,13 +116,17 @@ class City():
                 2. Load công trình và xây dựng
                 """)
             for st in data['structures']:
-                temp = Structure.Structure(mc, Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
-                if load_mode == "2":
+                temp = Structure(Vec3(st['position']['x'], st['position']['y'], st['position']['z']))
+                if mode == "2":
                     temp.load(st['filename'])
                 self.structuresData.append(st)
+                self.data = data['data']
+                self.StreetData = data.get('StreetData', [])
                 self.structuresInstance.append(temp)
 
     def monitor(self):
+        for st in self.structuresInstance:
+            st.draw_region()
         pass
 
     def statistic(self):
@@ -131,21 +139,16 @@ class City():
         pass
 
     def city_init_street(self):
-        streetRoot = Vec3(-37, 3, 204)
-        mc.entity.setPos(mc.getPlayerEntityId('huyhuy171'), streetRoot.x, streetRoot.y + 2, streetRoot.z)
 
-        street1  = Vec3(streetRoot.x , streetRoot.y, streetRoot.z -500)
-        street_line_x(street1, 1000)
+        x, y, z = startPoint.x,startPoint.y,startPoint.z
+        mc.entity.setPos(mc.getPlayerEntityId('huyhuy171'), x,y,z)
 
-        street2 = Vec3(streetRoot.x-500, streetRoot.y, streetRoot.z)
-        street_line_z(street2, 1000)
+        for i in range(-10, 10):
+            street_line_x(Vec3(x + i * 100, y, z), 100)
+        for i in range(-10, 10):
+            street_line_z(Vec3(x, y, z + i * 100), 100)
 
-        street_intersect(streetRoot)
+        street_intersect(startPoint)
 
         self.save('QH_CITY')
         pass
-
-
-ct = City()
-ct.city_init_street()
-# st.load('QH_HOTEL')

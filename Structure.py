@@ -1,3 +1,4 @@
+import turtle_tool
 from MinecraftStuff import *
 from mcpi.vec3 import Vec3
 from turtle import *
@@ -66,7 +67,7 @@ class Structure(MinecraftShape):
         self.filename = filename
         for block in self.shapeBlocks:
             pass
-
+        self.data['region_border'] = [self.x_min, self.y_min, self.z_min, self.x_max, self.y_max, self.z_max, ]
         saveData = {
             "data": self.data,
             "filename": self.filename,
@@ -168,6 +169,24 @@ class Structure(MinecraftShape):
     def replace_blocks(self, filename, replace_func):
         self._save(filename, 'replace', replace_func=replace_func)
 
+    def draw_region(self, text="", fill=True, fill_color='yellow'):
+        pen = self.pen
+        if len(text) == 0:
+            text = self.name
+        pen.speed(0)
+        x, y, z = self.position
+        try:
+            if fill:
+                turtle_tool.draw_square_fill_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min,
+                                                       z + self.z_min,
+                                                       text, fill_color)
+            else:
+                turtle_tool.draw_square_two_point(pen, x + self.x_max, z + self.z_max, x + self.x_min, z + self.z_min,
+                                                  text)
+
+        except:
+            print("ok")
+
 
 # st = Structure(Vec3(-62, 142, -341))
 # # st.save_custom_pos('QH_HOTEL',97,100,-19,135,66,-47)
@@ -177,11 +196,13 @@ class Structure(MinecraftShape):
 #
 #
 # # st.clear()
-# def convert(id, data):
-#     if id == 160 or id ==102:
-#         return [95, data]
-#     else:
-#         return [id, data]
+def convert(id, data):
+    if id == 160 or id == 102:
+        return [95, data]
+    else:
+        return [id, data]
+
+
 #
 #
 # st.replace_blocks('QH_HOTEL_2', replace_func=convert)
@@ -189,6 +210,44 @@ class Structure(MinecraftShape):
 # st.load('QH_HOTEL_2')
 
 
-st = Structure(Vec3(-1862,140,117))
-# st.save_custom_pos('QH_FACTORY', 54,66,131,148,100,22)
-#st.save_custom_pos('QH_VILLA', -1862,66,117,-1823,85,156)
+# st = Structure(Vec3(-1862,140,117))
+# # st.save_custom_pos('QH_FACTORY', 54,66,131,148,100,22)
+# st.replace_blocks('QH_HOTEL_3', replace_func=convert)
+
+
+
+# external code tool
+def save_villa():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_VILLA_2', -1584, 68, 42, -1623, 80, 81)
+    stx.replace_blocks('QH_VILLA_2', replace_func=convert)
+
+
+def save_villa_negative_X():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_VILLA_FACE_X_NEG', -1664, 67, 81, -1623, 80, 42)
+    # stx.replace_blocks('QH_VILLA_2', replace_func=convert)
+
+
+def save_hotel_4():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_HOTEL_4', -697, 67, -947, -688, 97, -968)
+
+
+def save_hotel_3():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_HOTEL_3', -1768, 68, 377, -1818, 122, 437)
+
+
+def save_hotel_5():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_HOTEL_5', -664, 67, -111, -121, 100, -88)
+
+def save_villa():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('QH_VILLA', 317, 0, 317, 356, 16, 356)
+def mc_donan():
+    stx = Structure(Vec3(0, 0, 140))
+    stx.save_custom_pos('DH_MCDONAN',208, 3, 389, 183, 19, 410)
+
+# mc_donan()

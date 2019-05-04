@@ -20,6 +20,7 @@ def street_line_x(position, length):
         'position': [position.x, position.y, position.z],
         'length': length
     })
+    return street
 
 
 def street_line_z(position, length):
@@ -32,6 +33,7 @@ def street_line_z(position, length):
         'position': [position.x, position.y, position.z],
         'length': length
     })
+    return street
 
 
 def street_intersect(position):
@@ -46,9 +48,10 @@ def street_intersect(position):
     street.setBlocks(13, 1, 13, 16, 1, 16, 44)
     # street.setBlocks(16, 1, 16, 12, 1, 12, 44)
     # street.setBlocks(16, 1, 16, 12, 1, 12, 35, 14)
-
     StreetData.append({
         'func': 'street_intersect',
-        'position': [position.x, position.y, position.z],
+        'position': [position.x
+                     , position.y, position.z],
 
     })
+    return street
